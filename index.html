@@ -1,0 +1,253 @@
+<!-- index.html
+  Plantilla: Donation + Order (HTML puro)
+  - Reemplaza TODO lo que esté dentro de los comentarios <!-- REPLACE: ... -->
+  - Deploy en GitHub Pages: push al repo y activa Pages (branch: main)
+  - Enforce HTTPS: si usas ozclef.github.io GitHub lo fuerza y todo servirá en https.
+-->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hamburguesas — ayuda</title>
+  <meta name="description" content="Campaña para ayudar — Hamburguesas la fauna necesita tu ayuda" />
+  <style>
+    :root{
+      --bg:#f7fafc; --card:#fff; --accent:#0ea5a4; --muted:#6b7280;
+      --maxw:900px;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Arial;margin:0;background:var(--bg);color:#0f172a}
+    .wrap{max-width:var(--maxw);margin:28px auto;padding:20px}
+    header{background:linear-gradient(90deg,#fff,#f1f5f9);padding:18px;border-radius:8px;box-shadow:0 6px 20px rgba(2,6,23,0.04)}
+    h1{margin:0;font-size:1.6rem}
+    p.lead{color:var(--muted);margin:8px 0 0}
+    .grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px}
+    @media(min-width:760px){ .grid{grid-template-columns:1fr 340px} }
+    .card{background:var(--card);padding:18px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
+    .btn{display:inline-block;padding:10px 14px;border-radius:8px;text-decoration:none;cursor:pointer}
+    .btn-primary{background:var(--accent);color:white}
+    .btn-ghost{border:1px solid #e6eef0;background:transparent;color:var(--muted)}
+    .muted{color:var(--muted);font-size:0.95rem}
+    .progressWrap{margin-top:12px}
+    .progress{background:#e6eef0;border-radius:999px;height:12px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#06b6d4);width:0%}
+    .meta{font-size:0.9rem;color:var(--muted);margin-top:8px}
+    .list{margin:12px 0;padding-left:18px;color:var(--muted)}
+    label{display:block;font-weight:600;margin-bottom:6px}
+    input[type=text], input[type=number], textarea, select{
+      width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef0;margin-bottom:10px;background:white
+    }
+    .small{font-size:0.85rem;color:var(--muted)}
+    footer{margin-top:22px;text-align:center;color:var(--muted);font-size:0.9rem}
+    .orderBox{display:flex;flex-direction:column;gap:8px}
+    .row{display:flex;gap:8px}
+    .row > *{flex:1}
+    .center{display:flex;gap:8px;align-items:center}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <h1><!-- REPLACE: Title -->Hamburguesas — <strong>La fauna necesita tu ayuda</strong></h1>
+      <p class="lead"><!-- REPLACE: subtitle -->Campaña para apoyar tratamiento médico y recuperación del negocio. Comparte y dona.</p>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: story + donate + order -->
+      <div>
+
+        <section class="card">
+          <h2>La historia</h2>
+          <p class="muted">
+            <!-- REPLACE: Story text -->
+            El negocio familiar “El Rincón de la Hada” necesita apoyo urgente. El hijo de la familia está hospitalizado por diabetes y los costos médicos son altos.
+          </p>
+
+          <ul class="list">
+            <!-- REPLACE: meta info -->
+            <li>Meta: <strong>$50,000 MXN</strong></li>
+            <li>Uso: hospital, medicinas, alimentación, apoyo para el negocio.</li>
+            <li>Contacto: WhatsApp: <!-- REPLACE: phone -->+521XXXXXXXXXXX</li>
+          </ul>
+
+          <div class="progressWrap">
+            <div class="meta">Recaudado: <strong id="currentAmount">$12,450</strong> — Meta: <strong id="goalAmount">$50,000</strong></div>
+            <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+          </div>
+        </section>
+
+        <section class="card" style="margin-top:12px">
+          <h3>Opciones para apoyar</h3>
+          <p class="muted">Elige una forma segura de donar o contáctanos por WhatsApp.</p>
+
+          <!-- REPLACE: Put your real links on hrefs -->
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <a class="btn btn-primary" target="_blank" rel="noopener noreferrer"
+               href="<!-- REPLACE: GoFundMe link -->https://www.gofundme.com/f/your-campaign">Donar (GoFundMe)</a>
+
+            <a class="btn btn-ghost" target="_blank" rel="noopener noreferrer"
+               href="<!-- REPLACE: Stripe/Checkout link -->https://buy.stripe.com/test_XXXX">Pagar con tarjeta</a>
+
+            <a class="btn btn-ghost" id="whatsappDonate" target="_blank"
+               href="#">Donar por WhatsApp</a>
+
+            <a class="btn btn-ghost" id="mailtoDonate" href="#">Enviar por email</a>
+          </div>
+
+          <p class="small" style="margin-top:10px">Consejo: usa plataformas públicas (GoFundMe, Donadora, Stripe) para transparencia. Evita recibir pagos directos en tu cuenta si declaras recaudación pública.</p>
+        </section>
+
+        <section class="card" style="margin-top:12px">
+          <h3>Pedido rápido (estilo DidiFood) — Restaurante: <em><!-- REPLACE: restaurant name -->El Rincón de la Hada</em></h3>
+          <p class="muted">Ejemplo simple: el cliente arma su pedido y se abre WhatsApp con el pedido prellenado para que lo confirmes y coordines entrega/pago.</p>
+
+          <form id="orderForm" class="orderBox" onsubmit="event.preventDefault(); sendOrderWA();">
+            <label for="name">Nombre</label>
+            <input id="name" type="text" placeholder="Tu nombre" required>
+
+            <label for="items">Pedido (ej: 2x Hamburguesa clásica, 1x Papas)</label>
+            <textarea id="items" rows="3" placeholder="Describe tu pedido" required></textarea>
+
+            <div class="row">
+              <div>
+                <label for="qty">Cantidad (opcional)</label>
+                <input id="qty" type="number" min="1" placeholder="1">
+              </div>
+              <div>
+                <label for="pickup">¿Recoger o entregar?</label>
+                <select id="pickup">
+                  <option value="Entrega">Entrega</option>
+                  <option value="Recoger">Recoger en local</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="center" style="margin-top:6px">
+              <button class="btn btn-primary" type="submit">Enviar pedido por WhatsApp</button>
+              <button class="btn btn-ghost" type="button" onclick="fillTestOrder()">Ejemplo</button>
+            </div>
+
+            <p class="small" style="margin-top:10px">Nota: este flujo abre WhatsApp con el mensaje; es ideal cuando no tienes pasarela de pedidos completa.</p>
+          </form>
+        </section>
+
+      </div>
+
+      <!-- RIGHT: aside with contact + actions -->
+      <aside>
+        <div class="card">
+          <h3>Contacto y transparencia</h3>
+          <p class="muted">Actualizaciones periódicas y comprobantes de gastos ayudan a la confianza.</p>
+
+          <div style="margin-top:12px">
+            <strong>WhatsApp:</strong>
+            <div class="muted" id="waNumber"><!-- REPLACE: phone visible -->+521XXXXXXXXXXX</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <strong>Email:</strong>
+            <div class="muted">tu@ejemplo.com <!-- REPLACE: email --></div>
+          </div>
+
+          <div style="margin-top:12px">
+            <strong>Estado:</strong>
+            <div class="muted">Última actualización: <span id="lastUpdate">--/--/----</span></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;text-align:center">
+          <h4>¿Dónde mostrar esto?</h4>
+          <p class="small">Comparte en Facebook, Instagram y en la bio de tu negocio. Si lo subes en Pages, pega la URL en publicaciones.</p>
+          <a class="btn btn-primary" href="#" onclick="copyURL()">Copiar URL</a>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h4>Licencia</h4>
+          <p class="small">Incluye un archivo <code>LICENSE</code> en la raíz del repo (MIT/CC dependiendo de lo que quieras permitir).</p>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      Creado por <strong>Ozclef</strong> — Transparencia, rendición de cuentas y amor por el barrio.
+    </footer>
+
+  </div>
+
+<script>
+  // -------------------------
+  // REPLACE: Config - cambia aquí
+  // -------------------------
+  const CONFIG = {
+    whatsappNumber: "+521XXXXXXXXXXX", // REPLACE: full number with country code (no + in wa link creation, we remove it below)
+    email: "tu@ejemplo.com",           // REPLACE
+    gofundme: "https://www.gofundme.com/f/your-campaign", // REPLACE
+    stripeLink: "https://buy.stripe.com/test_XXXX",       // REPLACE
+    restaurantName: "El Rincón de la Hada",               // REPLACE
+    // amounts (strings with currency for display)
+    currentAmount: 12450,
+    goalAmount: 50000
+  };
+
+  // UI init
+  document.getElementById('currentAmount').textContent = "$" + CONFIG.currentAmount.toLocaleString("es-MX");
+  document.getElementById('goalAmount').textContent = "$" + CONFIG.goalAmount.toLocaleString("es-MX");
+  const pct = Math.round((CONFIG.currentAmount / CONFIG.goalAmount) * 100);
+  document.getElementById('progressBar').style.width = Math.min(100, pct) + "%";
+
+  // set contact displays
+  document.getElementById('waNumber').textContent = CONFIG.whatsappNumber;
+  document.getElementById('mailtoDonate').href = "mailto:" + encodeURIComponent(CONFIG.email) + "?subject=" + encodeURIComponent("Quiero donar") + "&body=" + encodeURIComponent("Hola,%0A%0AQuiero apoyar la campaña. ¿Cómo procedo?");
+  // donate buttons (replace links)
+  document.querySelector('.btn-primary').href = CONFIG.gofundme;
+  document.querySelectorAll('.btn-ghost')[0].href = CONFIG.stripeLink;
+  // whatsapp donate button
+  document.getElementById('whatsappDonate').href = makeWhatsAppLink("Hola, quiero apoyar la campaña. ¿Cómo puedo donar?");
+
+  function makeWhatsAppLink(text){
+    // remove + and non-digits from number for wa link
+    const digits = (CONFIG.whatsappNumber || "").replace(/\D/g,'');
+    return "https://wa.me/" + digits + "?text=" + encodeURIComponent(text);
+  }
+
+  // Order form -> open WhatsApp with prefilled order message
+  function sendOrderWA(){
+    const name = document.getElementById('name').value || "Cliente";
+    const items = document.getElementById('items').value || "";
+    const qty = document.getElementById('qty').value || "";
+    const pickup = document.getElementById('pickup').value || "Entrega";
+
+    const msg = `Pedido para ${CONFIG.restaurantName}%0ANombre: ${name}%0APedido: ${items}%0ACantidad: ${qty}%0A${pickup}%0A%0APor favor confirmar precio y tiempo.`;
+    const digits = (CONFIG.whatsappNumber || "").replace(/\D/g,'');
+    const url = "https://wa.me/" + digits + "?text=" + msg;
+    window.open(url, "_blank");
+  }
+
+  function fillTestOrder(){
+    document.getElementById('name').value = "Juan Pérez";
+    document.getElementById('items').value = "2x Hamburguesa clásica, 1x Papas medianas";
+    document.getElementById('qty').value = 1;
+    document.getElementById('pickup').value = "Entrega";
+  }
+
+  function copyURL(){
+    navigator.clipboard.writeText(window.location.href).then(()=> alert("URL copiada al portapapeles"));
+  }
+
+  // last update date (replace with dynamic data if you use deploy scripts)
+  document.getElementById('lastUpdate').textContent = (new Date()).toLocaleDateString();
+
+  // Optional: function to update progress when you edit amounts quickly in console
+  window.setProgress = (current, goal) => {
+    CONFIG.currentAmount = Number(current);
+    CONFIG.goalAmount = Number(goal);
+    document.getElementById('currentAmount').textContent = "$" + CONFIG.currentAmount.toLocaleString("es-MX");
+    document.getElementById('goalAmount').textContent = "$" + CONFIG.goalAmount.toLocaleString("es-MX");
+    const pct2 = Math.round((CONFIG.currentAmount / CONFIG.goalAmount) * 100);
+    document.getElementById('progressBar').style.width = Math.min(100, pct2) + "%";
+  };
+</script>
+</body>
+</html>
