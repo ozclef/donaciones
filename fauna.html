@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hamburguesas — ayuda</title>
+  <meta name="description" content="Campaña para ayudar — Hamburguesas la fauna necesita tu ayuda" />
+  <style>
+    :root{
+      --bg:#f7fafc; --card:#fff; --accent:#0ea5a4; --muted:#6b7280;
+      --maxw:900px;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Arial;margin:0;background:var(--bg);color:#0f172a}
+    .wrap{max-width:var(--maxw);margin:28px auto;padding:20px}
+    header{background:linear-gradient(90deg,#fff,#f1f5f9);padding:18px;border-radius:8px;box-shadow:0 6px 20px rgba(2,6,23,0.04)}
+    h1{margin:0;font-size:1.6rem}
+    p.lead{color:var(--muted);margin:8px 0 0}
+    .grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px}
+    @media(min-width:760px){ .grid{grid-template-columns:1fr 340px} }
+    .card{background:var(--card);padding:18px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
+    .btn{display:inline-block;padding:10px 14px;border-radius:8px;text-decoration:none;cursor:pointer}
+    .btn-primary{background:var(--accent);color:white}
+    .btn-ghost{border:1px solid #e6eef0;background:transparent;color:var(--muted)}
+    .muted{color:var(--muted);font-size:0.95rem}
+    .progressWrap{margin-top:12px}
+    .progress{background:#e6eef0;border-radius:999px;height:12px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#06b6d4);width:0%}
+    .meta{font-size:0.9rem;color:var(--muted);margin-top:8px}
+    .list{margin:12px 0;padding-left:18px;color:var(--muted)}
+    label{display:block;font-weight:600;margin-bottom:6px}
+    input[type=text], input[type=number], textarea, select{
+      width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef0;margin-bottom:10px;background:white
+    }
+    .small{font-size:0.85rem;color:var(--muted)}
+    footer{margin-top:22px;text-align:center;color:var(--muted);font-size:0.9rem}
+    .orderBox{display:flex;flex-direction:column;gap:8px}
+    .row{display:flex;gap:8px}
+    .row > *{flex:1}
+    .center{display:flex;gap:8px;align-items:center}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <h1><!-- REPLACE: Title -->Hamburguesas — <strong>La fauna necesita tu ayuda</strong></h1>
+      <p class="lead"><!-- REPLACE: subtitle -->Campaña para apoyar tratamiento médico y recuperación del negocio. Comparte y dona.</p>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: story + donate + order -->
+      <div>
+
+        <section class="card">
+          <h2>La historia</h2>
+          <p class="muted">
+            <!-- REPLACE: Story text -->
+            El negocio familiar “El Rincón de la Hada” necesita apoyo urgente. El hijo de la familia está hospitalizado por diabetes y los costos médicos son altos.
+          </p>
+
+          <ul class="list">
+            <!-- REPLACE: meta info -->
+            <li>Meta: <strong>$50,000 MXN</strong></li>
+            <li>Uso: hospital, medicinas, alimentación, apoyo para el negocio.</li>
+            <li>Contacto: WhatsApp: <!-- REPLACE: phone -->+521XXXXXXXXXXX</li>
+          </ul>
+
+          <div class="progressWrap">
+            <div class="meta">Recaudado: <strong id="currentAmount">$12,450</strong> — Meta: <strong id="goalAmount">$50,000</strong></div>
+            <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+          </div>
+        </section>
+
+        <section class="card" style="margin-top:12px">
+          <h3>Opciones para apoyar</h3>
+          <p class="muted">Elige una forma segura de donar o contáctanos por WhatsApp.</p>
+
+          <!-- REPLACE: Put your real links on hrefs -->
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <a class="btn btn-primary" target="_blank" rel="noopener noreferrer"
+               href="<!-- REPLACE: GoFundMe link -->https://www.gofundme.com/f/your-campaign">Donar (GoFundMe)</a>
+
+            <a class="btn btn-ghost" target="_blank" rel="noopener noreferrer"
+               href="<!-- REPLACE: Stripe/Checkout link -->https://buy.stripe.com/test_XXXX">Pagar con tarjeta</a>
+
+            <a class="btn btn-ghost" id="whatsappDonate" target="_blank"
+               href="#">Donar por WhatsApp</a>
+
+            <a class="btn btn-ghost" id="mailtoDonate" href="#">Enviar por email</a>
+          </div>
+
+          <p class="small" style="margin-top:10px">Consejo: usa plataformas públicas (GoFundMe, Donadora, Stripe) para transparencia. Evita recibir pagos directos en tu cuenta si declaras recaudación pública.</p>
+        </section>
